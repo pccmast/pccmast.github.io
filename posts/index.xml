@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 我的第一个博客</title>
-    <link>http://example.org/posts/</link>
+    <link>http://pccmast.github.io/posts/</link>
     <description>Recent content in Posts on 我的第一个博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Tue, 15 Sep 2020 19:50:35 +0800</lastBuildDate><atom:link href="http://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Sep 2020 19:50:35 +0800</lastBuildDate><atom:link href="http://pccmast.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My First Post</title>
-      <link>http://example.org/posts/my-first-post/</link>
+      <link>http://pccmast.github.io/posts/my-first-post/</link>
       <pubDate>Tue, 15 Sep 2020 19:50:35 +0800</pubDate>
       
-      <guid>http://example.org/posts/my-first-post/</guid>
+      <guid>http://pccmast.github.io/posts/my-first-post/</guid>
       <description>我的第一篇博客 安装Hugo   Mac 安装方式：
  brew install hugo hugo version    Windows 安装方式：
  Hugo release 网站下载 hugo 解压hugo文件夹 把 &amp;hellip;\hugo 加入PATH 重启终端    安装完成的标志：命令行输入 hugo version 显示代码
