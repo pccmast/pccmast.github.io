@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>包管理与Maven | 我的第一个博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.75.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="包管理与Maven" />
+<meta property="og:description" content="JVM的类加载   JVM的工作被设计地相当简单：
+ 执行一个类的字节码 假如这个过程中碰到了新的类，加载它    寻找类的地方：classpath（类路径）。
+  类的全限定类名（目录层级，比如 com.github.hscp.XXX）唯一确定了一个类
+  包就是把许多类放在⼀一起打的压缩包
+  classpath hell 当多个同名类同时出现在classpath中时，就是噩梦的开始，jdk会不知道使用哪个类。并且你也很难发现这个错误。
+* 比如，a 路径中有 com.github.hscp.Cat b 路径中也有 com.github.hscp.Cat  包管理 包管理的本质就是告诉JVM如何找到所需的第三⽅方类库，以及成功地解决其中的冲突问题
+黑暗岁月 手动写命令进行编译运行
+启蒙时代 Apache Ant
+ 手动下载jar包，放在一个目录中 写XML配置，指定编译的源代码目录、依赖的jar包、输出目录等  缺点
+ 每个人都要自⼰造一套轮子（定义存放包的路径） 依赖的第三方类库都需要手动下载，费时费力 假如你的应用依赖了一万个第三方的类库呢？ 没有解决 Classpath 地狱的问题  光明时代 Maven 时代
+ 思想：Convention over configuration（约定优于配置） Maven 远不不止是包管理工具 Maven 有两个仓库，中央仓库和本地仓库  Maven 的中央仓库按照一定的约定储存包   Maven 的本地仓库  默认位于 ~/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/" />
+<meta property="article:published_time" content="2020-09-26T10:46:32+08:00" />
+<meta property="article:modified_time" content="2020-09-26T10:46:32+08:00" />
+<meta itemprop="name" content="包管理与Maven">
+<meta itemprop="description" content="JVM的类加载   JVM的工作被设计地相当简单：
+ 执行一个类的字节码 假如这个过程中碰到了新的类，加载它    寻找类的地方：classpath（类路径）。
+  类的全限定类名（目录层级，比如 com.github.hscp.XXX）唯一确定了一个类
+  包就是把许多类放在⼀一起打的压缩包
+  classpath hell 当多个同名类同时出现在classpath中时，就是噩梦的开始，jdk会不知道使用哪个类。并且你也很难发现这个错误。
+* 比如，a 路径中有 com.github.hscp.Cat b 路径中也有 com.github.hscp.Cat  包管理 包管理的本质就是告诉JVM如何找到所需的第三⽅方类库，以及成功地解决其中的冲突问题
+黑暗岁月 手动写命令进行编译运行
+启蒙时代 Apache Ant
+ 手动下载jar包，放在一个目录中 写XML配置，指定编译的源代码目录、依赖的jar包、输出目录等  缺点
+ 每个人都要自⼰造一套轮子（定义存放包的路径） 依赖的第三方类库都需要手动下载，费时费力 假如你的应用依赖了一万个第三方的类库呢？ 没有解决 Classpath 地狱的问题  光明时代 Maven 时代
+ 思想：Convention over configuration（约定优于配置） Maven 远不不止是包管理工具 Maven 有两个仓库，中央仓库和本地仓库  Maven 的中央仓库按照一定的约定储存包   Maven 的本地仓库  默认位于 ~/.">
+<meta itemprop="datePublished" content="2020-09-26T10:46:32+08:00" />
+<meta itemprop="dateModified" content="2020-09-26T10:46:32+08:00" />
+<meta itemprop="wordCount" content="205">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="包管理与Maven"/>
+<meta name="twitter:description" content="JVM的类加载   JVM的工作被设计地相当简单：
+ 执行一个类的字节码 假如这个过程中碰到了新的类，加载它    寻找类的地方：classpath（类路径）。
+  类的全限定类名（目录层级，比如 com.github.hscp.XXX）唯一确定了一个类
+  包就是把许多类放在⼀一起打的压缩包
+  classpath hell 当多个同名类同时出现在classpath中时，就是噩梦的开始，jdk会不知道使用哪个类。并且你也很难发现这个错误。
+* 比如，a 路径中有 com.github.hscp.Cat b 路径中也有 com.github.hscp.Cat  包管理 包管理的本质就是告诉JVM如何找到所需的第三⽅方类库，以及成功地解决其中的冲突问题
+黑暗岁月 手动写命令进行编译运行
+启蒙时代 Apache Ant
+ 手动下载jar包，放在一个目录中 写XML配置，指定编译的源代码目录、依赖的jar包、输出目录等  缺点
+ 每个人都要自⼰造一套轮子（定义存放包的路径） 依赖的第三方类库都需要手动下载，费时费力 假如你的应用依赖了一万个第三方的类库呢？ 没有解决 Classpath 地狱的问题  光明时代 Maven 时代
+ 思想：Convention over configuration（约定优于配置） Maven 远不不止是包管理工具 Maven 有两个仓库，中央仓库和本地仓库  Maven 的中央仓库按照一定的约定储存包   Maven 的本地仓库  默认位于 ~/."/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        我的第一个博客
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/&amp;text=%e5%8c%85%e7%ae%a1%e7%90%86%e4%b8%8eMaven" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/&amp;title=%e5%8c%85%e7%ae%a1%e7%90%86%e4%b8%8eMaven" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">包管理与Maven</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-09-26T10:46:32+08:00">September 26, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="jvm的类加载">JVM的类加载</h2>
+<ul>
+<li>
+<p>JVM的工作被设计地相当简单：</p>
+<ul>
+<li>执行一个类的字节码</li>
+<li>假如这个过程中碰到了新的类，加载它</li>
+</ul>
+</li>
+<li>
+<p>寻找类的地方：classpath（类路径）。</p>
+</li>
+<li>
+<p>类的全限定类名（目录层级，比如 com.github.hscp.XXX）唯一确定了一个类</p>
+</li>
+<li>
+<p>包就是把许多类放在⼀一起打的压缩包</p>
+</li>
+</ul>
+<h2 id="classpath-hell">classpath hell</h2>
+<p>当多个同名类同时出现在classpath中时，就是噩梦的开始，jdk会不知道使用哪个类。并且你也很难发现这个错误。</p>
+<pre><code>* 比如，a 路径中有 com.github.hscp.Cat
+b 路径中也有 com.github.hscp.Cat
+</code></pre>
+<h2 id="包管理">包管理</h2>
+<p>包管理的本质就是告诉JVM如何找到所需的第三⽅方类库，以及成功地解决其中的冲突问题</p>
+<h3 id="黑暗岁月">黑暗岁月</h3>
+<p>手动写命令进行编译运行</p>
+<h3 id="启蒙时代">启蒙时代</h3>
+<p><strong>Apache Ant</strong></p>
+<ul>
+<li>手动下载jar包，放在一个目录中</li>
+<li>写XML配置，指定编译的源代码目录、依赖的jar包、输出目录等</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>每个人都要自⼰造一套轮子（定义存放包的路径）</li>
+<li>依赖的第三方类库都需要手动下载，费时费力</li>
+<li>假如你的应用依赖了一万个第三方的类库呢？</li>
+<li>没有解决 Classpath 地狱的问题</li>
+</ul>
+<h3 id="光明时代">光明时代</h3>
+<p><strong>Maven 时代</strong></p>
+<ul>
+<li>思想：Convention over configuration（约定优于配置）</li>
+<li>Maven 远不不止是包管理工具</li>
+<li>Maven 有两个仓库，中央仓库和本地仓库
+<ul>
+<li>Maven 的中央仓库按照一定的约定储存包</li>
+</ul>
+</li>
+<li>Maven 的本地仓库
+<ul>
+<li>默认位于 ~/.m2 (~ 在/c/users/用户名)</li>
+<li>下载的第三方包放在这里进行缓存</li>
+<li>看你下载的包在 ~/.m2/respository</li>
+<li>默认下载的是字节码包</li>
+</ul>
+</li>
+<li>Maven 的包
+<ul>
+<li>按照约定为所有的包编号，方便检索</li>
+<li>groupId/artifactId/version</li>
+<li>组织id / 功能号（某个api） / 版本号</li>
+</ul>
+</li>
+<li><strong>语义化版本</strong> 2.0.0
+主版本号。次版本号。修订号
+不兼容更改。向下兼容更改。修bug版本</li>
+<li>Snapshot 版本
+开发了但是不准备发布的版本</li>
+</ul>
+<h2 id="依赖链的查看">依赖链的查看</h2>
+<ul>
+<li>maven侧边栏点击dependencies查看依赖树</li>
+<li>命令行输入 <code>mvn dependency:tree</code></li>
+<li>idea 插件：maven helper， 代码窗口下方的 dependency analyzer &ndash; All dependencies as list / tree</li>
+</ul>
+<h2 id="传递性依赖的自动管理">传递性依赖的自动管理</h2>
+<ul>
+<li>
+<p>原则：绝对不允许最终的classpath出现<strong>同名不同版本</strong>的jar包</p>
+</li>
+<li>
+<p>冲突的表现，运行java文件，出现异常：</p>
+<ul>
+<li>AbstractMethodError</li>
+<li>NoClassDefFoundError</li>
+<li>ClassNotFoundException</li>
+<li>LinkageError</li>
+</ul>
+</li>
+<li>
+<p>依赖冲突的解决：</p>
+<ul>
+<li>原则：最近的胜出（离你项目最近的胜出，近指的是更短的依赖链）</li>
+</ul>
+</li>
+</ul>
+<h2 id="冲突的解决方案">冲突的解决方案</h2>
+<ol>
+<li>
+<p>手动<strong>添加</strong>冲突的包的某个版本，因为最近原则，能指定为唯一版本。</p>
+</li>
+<li>
+<p>在 exclusions 中添加要排除的版本。在某个产生冲突的依赖包中添加 exclusions 标签 和 exclusion 标签并且添加产生冲突包的 artifactId 和 GroupId。</p>
+</li>
+<li>
+<p>maven helper 的 dependency analyzer。出现冲突的地方会用红色高亮。选中该包，右键 exclude，之后点击 reimport。refresh ui 刷新依赖关系</p>
+</li>
+</ol>
+<h2 id="git-查看不同的版本">Git 查看不同的版本</h2>
+<ul>
+<li>branch 分支按钮 旁边的 tag 栏目，约定被用来标记不同的版本</li>
+</ul>
+<p>pom ： project object model</p>
+<h2 id="scope-的属性值">scope 的属性值</h2>
+<p>maven中scope属性在POM 4中，<!-- raw HTML omitted -->中引入了<!-- raw HTML omitted -->，它主要管理依赖的部署。目前<!-- raw HTML omitted -->可以使用5个值： </p>
+<ul>
+<li><strong>compile</strong>，缺省值，适用于所有阶段，会随着项目一起发布。 运行编译测试的时候有效。在maven文件中对test文件夹和main文件夹下的代码有效。</li>
+<li><strong>provided</strong>，在编译和测试过程中有效，期望JDK、容器或使用者会提供这个依赖。如servlet.jar。 编译的时候有效。</li>
+<li><strong>runtime</strong>，只在运行时使用，如JDBC驱动，适用运行和测试阶段。 </li>
+<li><strong>test</strong>，只在测试时使用，用于编译和运行测试代码。不会随项目发布。 在maven文件中只对test文件夹下的代码有效。</li>
+<li><strong>system</strong>，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。依赖范围控制哪些依赖在哪些classpath 中可用，哪些依赖包含在一个应用中。</li>
+</ul>
+<p>让我们详细看一下每一种范围：</p>
+<h4 id="compile编译范围">compile （编译范围）</h4>
+<p>compile表示被依赖项目需要参与当前项目的<strong>编译</strong>，当然后续的<strong>测试</strong>，<strong>运行</strong>周期也参与其中，是一个比较强的依赖。同时它们也会被打包。compile是默认的scope；如果没有提供一个 scope，那该依赖的scope就是编译scope。编译scope依赖在所有的classpath 中可用。</p>
+<h4 id="provided已提供范围">provided （已提供范围）</h4>
+<p>provided 依赖只有在当 JDK 或者一个容器已提供该依赖之后才使用，<strong>在编译和测试时有效</strong>。例如， 如果你开发了一个web 应用，你可能在编译 classpath 中需要可用的 Servlet API 来编译一个servlet，但是你不会想要在打包好的 WAR 中包含这个 Servlet API；这个Servlet API JAR 由你的应用服务器或者 servlet 容器提供。<strong>provided 范围的依赖在编译classpath 可用， 运行时不可用，会报错 ClassNofound错误</strong>。它们<strong>不是传递性的</strong>，<strong>也不会被打包</strong>。</p>
+<h4 id="runtime运行时范围">runtime （运行时范围）</h4>
+<p>runtime 依赖在<strong>运行和测试</strong>系统的时候需要，但<strong>在编译的时候不需要</strong>。比如，你可能在编译的时候只需要JDBC API JAR，而只有在运行的时候才需要JDBC
+驱动实现。</p>
+<h4 id="test测试范围">test （测试范围）</h4>
+<p>test范围依赖 <strong>在一般的编译和运行时都不需要</strong>，它们只有在测试编译和测试运行阶段可用。比较典型的如junit。</p>
+<h4 id="system系统范围">system （系统范围）</h4>
+<p>system范围依赖与 provided 类似，但是你必须显式的提供一个对于本地系统中JAR 文件的路径。这么做是为了允许基于本地对象编译，而这些对象是系统类库的一部分。</p>
+<p>这样的构件应该是一直可用的，Maven 也不会在仓库中去寻找它。如果你将一个依赖范围设置成系统范围，你必须同时提供一个 systemPath 元素。注意该范围是不推荐使用的（你应该一直尽量去从公共或定制的 Maven 仓库中引用依赖）。</p>
+<h2 id="scope的依赖传递">scope的依赖传递</h2>
+<p>scope的依赖传递A–&gt;B–&gt;C。当前项目为A，A依赖于B，B依赖于C。知道B在A项目中的scope，那么怎么知道C在A中的scope呢？答案是： </p>
+<p><strong>当C是test或者provided时，C直接被丢弃，A不依赖C； 
+否则A依赖C，C的scope继承于B的scope。</strong></p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://pccmast.github.io/" >
+    &copy;  我的第一个博客 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://pccmast.github.io/" />
-<meta property="og:updated_time" content="2020-09-15T19:50:35+08:00" />
+<meta property="og:updated_time" content="2020-09-26T10:46:32+08:00" />
 <meta itemprop="name" content="我的第一个博客">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
@@ -119,6 +119,40 @@
 
       <section class="w-100 mw8">
         
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="color-inherit dim link">
+            包管理与Maven
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          JVM的类加载   JVM的工作被设计地相当简单：
+ 执行一个类的字节码 假如这个过程中碰到了新的类，加载它    寻找类的地方：classpath（类路径）。
+  类的全限定类名（目录层级，比如 com.github.hscp.XXX）唯一确定了一个类
+  包就是把许多类放在⼀一起打的压缩包
+  classpath hell 当多个同名类同时出现在classpath中时，就是噩梦的开始，jdk会不知道使用哪个类。并且你也很难发现这个错误。
+* 比如，a 路径中有 com.github.hscp.Cat b 路径中也有 com.github.hscp.Cat  包管理 包管理的本质就是告诉JVM如何找到所需的第三⽅方类库，以及成功地解决其中的冲突问题
+黑暗岁月 手动写命令进行编译运行
+启蒙时代 Apache Ant
+ 手动下载jar包，放在一个目录中 写XML配置，指定编译的源代码目录、依赖的jar包、输出目录等  缺点
+ 每个人都要自⼰造一套轮子（定义存放包的路径） 依赖的第三方类库都需要手动下载，费时费力 假如你的应用依赖了一万个第三方的类库呢？ 没有解决 Classpath 地狱的问题  光明时代 Maven 时代
+ 思想：Convention over configuration（约定优于配置） Maven 远不不止是包管理工具 Maven 有两个仓库，中央仓库和本地仓库  Maven 的中央仓库按照一定的约定储存包   Maven 的本地仓库  默认位于 ~/.
+        </div>
+          <a href="http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
         
           <div class="relative w-100 mb4">
             
