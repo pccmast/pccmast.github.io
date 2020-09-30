@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Hashmapimplements | 我的第一个博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.75.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Hashmapimplements" />
+<meta property="og:description" content="jdk11的HashMap源码分析 文档注释部分：  HashMap是无序的，特别是不保证顺序随时间不变 get 和 put 操作是常量时间复杂度的&mdash;O(1) 装载因子设置为0.75，平衡了空间和时间消耗。更高的装载因子降低了空间成本却增大了查找的花费，导致put、get操作时间变慢。 如果初始容量（initial capacity）比最大元素数（maximum number of entries）除以装载因子的值还大，那么不会再进行rehash操作。 一般采用桶（binned、bucketed）哈希表，但是如果桶元素太多，会变成树（TreeNodes），树的结构就像TreeMap 由于 resize 和 removal 操作导致树的结点太少的时候，会将红黑树变为哈希桶（untreeified）  继承关系 public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable  HashMap可被序列化，可被克隆  参数 static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16 // 必须是2的幂 static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30; // 必须是2的幂 static final float DEFAULT_LOAD_FACTOR = 0.75f; static final int TREEIFY_THRESHOLD = 8; // 当一个hash桶的元素数大于8，那么就变成红黑树实现  static final int UNTREEIFY_THRESHOLD = 6; // 当resize让一个树的元素小于6时，就把它变为桶  static final int MIN_TREEIFY_CAPACITY = 64; // 整个hash表执行树化操作的最小容量，表里的元素数大于64才会树化桶 put()  代码注解来源" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" />
+<meta property="article:published_time" content="2020-09-30T19:32:13+08:00" />
+<meta property="article:modified_time" content="2020-09-30T19:32:13+08:00" />
+<meta itemprop="name" content="Hashmapimplements">
+<meta itemprop="description" content="jdk11的HashMap源码分析 文档注释部分：  HashMap是无序的，特别是不保证顺序随时间不变 get 和 put 操作是常量时间复杂度的&mdash;O(1) 装载因子设置为0.75，平衡了空间和时间消耗。更高的装载因子降低了空间成本却增大了查找的花费，导致put、get操作时间变慢。 如果初始容量（initial capacity）比最大元素数（maximum number of entries）除以装载因子的值还大，那么不会再进行rehash操作。 一般采用桶（binned、bucketed）哈希表，但是如果桶元素太多，会变成树（TreeNodes），树的结构就像TreeMap 由于 resize 和 removal 操作导致树的结点太少的时候，会将红黑树变为哈希桶（untreeified）  继承关系 public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable  HashMap可被序列化，可被克隆  参数 static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16 // 必须是2的幂 static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30; // 必须是2的幂 static final float DEFAULT_LOAD_FACTOR = 0.75f; static final int TREEIFY_THRESHOLD = 8; // 当一个hash桶的元素数大于8，那么就变成红黑树实现  static final int UNTREEIFY_THRESHOLD = 6; // 当resize让一个树的元素小于6时，就把它变为桶  static final int MIN_TREEIFY_CAPACITY = 64; // 整个hash表执行树化操作的最小容量，表里的元素数大于64才会树化桶 put()  代码注解来源">
+<meta itemprop="datePublished" content="2020-09-30T19:32:13+08:00" />
+<meta itemprop="dateModified" content="2020-09-30T19:32:13+08:00" />
+<meta itemprop="wordCount" content="120">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hashmapimplements"/>
+<meta name="twitter:description" content="jdk11的HashMap源码分析 文档注释部分：  HashMap是无序的，特别是不保证顺序随时间不变 get 和 put 操作是常量时间复杂度的&mdash;O(1) 装载因子设置为0.75，平衡了空间和时间消耗。更高的装载因子降低了空间成本却增大了查找的花费，导致put、get操作时间变慢。 如果初始容量（initial capacity）比最大元素数（maximum number of entries）除以装载因子的值还大，那么不会再进行rehash操作。 一般采用桶（binned、bucketed）哈希表，但是如果桶元素太多，会变成树（TreeNodes），树的结构就像TreeMap 由于 resize 和 removal 操作导致树的结点太少的时候，会将红黑树变为哈希桶（untreeified）  继承关系 public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable  HashMap可被序列化，可被克隆  参数 static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16 // 必须是2的幂 static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30; // 必须是2的幂 static final float DEFAULT_LOAD_FACTOR = 0.75f; static final int TREEIFY_THRESHOLD = 8; // 当一个hash桶的元素数大于8，那么就变成红黑树实现  static final int UNTREEIFY_THRESHOLD = 6; // 当resize让一个树的元素小于6时，就把它变为桶  static final int MIN_TREEIFY_CAPACITY = 64; // 整个hash表执行树化操作的最小容量，表里的元素数大于64才会树化桶 put()  代码注解来源"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        我的第一个博客
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/&amp;text=Hashmapimplements" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/&amp;title=Hashmapimplements" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Hashmapimplements</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-09-30T19:32:13+08:00">September 30, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="jdk11的hashmap源码分析">jdk11的HashMap源码分析</h1>
+<h2 id="文档注释部分">文档注释部分：</h2>
+<ul>
+<li>HashMap是无序的，特别是不保证顺序随时间不变</li>
+<li>get 和 put 操作是常量时间复杂度的&mdash;O(1)</li>
+<li>装载因子设置为0.75，平衡了空间和时间消耗。更高的装载因子降低了空间成本却增大了查找的花费，导致put、get操作时间变慢。</li>
+<li>如果初始容量（initial capacity）比最大元素数（maximum number of entries）除以装载因子的值还大，那么不会再进行rehash操作。</li>
+<li><strong>一般采用桶（binned、bucketed）哈希表，但是如果桶元素太多，会变成树（TreeNodes），树的结构就像TreeMap</strong></li>
+<li>由于 resize 和 removal 操作导致树的结点太少的时候，会将红黑树变为哈希桶（untreeified）</li>
+</ul>
+<h2 id="继承关系">继承关系</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HashMap</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> AbstractMap<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span>    
+<span style="color:#66d9ef">implements</span> Map<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;,</span> Cloneable<span style="color:#f92672">,</span> Serializable
+</code></pre></div><ul>
+<li>HashMap可被序列化，可被克隆</li>
+</ul>
+<h2 id="参数">参数</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> DEFAULT_INITIAL_CAPACITY <span style="color:#f92672">=</span> 1 <span style="color:#f92672">&lt;&lt;</span> 4<span style="color:#f92672">;</span> <span style="color:#75715e">// aka 16
+</span><span style="color:#75715e">// 必须是2的幂
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MAXIMUM_CAPACITY <span style="color:#f92672">=</span> 1 <span style="color:#f92672">&lt;&lt;</span> 30<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 必须是2的幂
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">float</span> DEFAULT_LOAD_FACTOR <span style="color:#f92672">=</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">75f</span><span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> TREEIFY_THRESHOLD <span style="color:#f92672">=</span> 8<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 当一个hash桶的元素数大于8，那么就变成红黑树实现
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> UNTREEIFY_THRESHOLD <span style="color:#f92672">=</span> 6<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 当resize让一个树的元素小于6时，就把它变为桶
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> MIN_TREEIFY_CAPACITY <span style="color:#f92672">=</span> 64<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 整个hash表执行树化操作的最小容量，表里的元素数大于64才会树化桶
+</span></code></pre></div><h2 id="put">put()</h2>
+<blockquote>
+<p><a href="https://blog.csdn.net/lxyer4u/article/details/86233382">代码注解来源</a></p>
+</blockquote>
+<ul>
+<li>
+<p>找一个元素的所在位置 <code>p = tab[i=(n-1) &amp; hash]</code>，其中n表示哈希表的长度，是 2 的幂减 1，<code>n-1</code>是每位都是1的二进制数，借助<code>与</code>运算即可快速完成取模操作</p>
+</li>
+<li>
+<p>HashMap的 bucket 容量必须为2的幂的另一个重要原因是一旦满足此条件，那么length即为偶数，length - 1便为奇数，所以length - 1的最后一位必为1。因此，h &amp; (length - 1)得到的值既可能是奇数，也可能是偶数，这确保了散列的均匀性。如果length - 1是偶数，那么h &amp; (length - 1)得到的值必为偶数，那么HashMap的空间便浪费了一半。</p>
+</li>
+<li>
+<p><strong>尾插法</strong>插入新元素</p>
+</li>
+</ul>
+<p><img src="/put-01.png" alt="put函数注释1">
+<img src="/put-02.png" alt="put函数注释2"></p>
+<h2 id="get">get()</h2>
+<blockquote>
+<p><a href="https://blog.csdn.net/lxyer4u/article/details/86233382">代码注解来源</a></p>
+</blockquote>
+<ul>
+<li>如果key值存在，检查hash值相等的第一个元素是不是，不是的话分红黑树和链表两种情况检查。</li>
+</ul>
+<p><img src="/get-01.png" alt="get函数注释1">
+<img src="/get-02.png" alt="get函数注释2"></p>
+<h2 id="参考文献">参考文献</h2>
+<ol>
+<li>
+<p><a href="https://www.cnblogs.com/helloworldcode/p/13057434.html">https://www.cnblogs.com/helloworldcode/p/13057434.html</a></p>
+</li>
+<li>
+<p><a href="https://segmentfault.com/a/1190000007699188">https://segmentfault.com/a/1190000007699188</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/lxyer4u/article/details/86233382">https://blog.csdn.net/lxyer4u/article/details/86233382</a></p>
+</li>
+</ol>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://pccmast.github.io/" >
+    &copy;  我的第一个博客 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
