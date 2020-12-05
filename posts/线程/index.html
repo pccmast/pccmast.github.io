@@ -27,23 +27,32 @@
     
     
     <meta property="og:title" content="线程" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="线程   一个Java程序实际上是一个JVM进程，JVM进程用一个主线程来执行main()方法，在main()方法内部，我们又可以启动多个线程。此外，JVM还有负责垃圾回收的其他工作线程等。
+  因此，对于大多数Java程序来说，我们说多任务，实际上是说如何使用多线程实现多任务。
+  创建新线程 class Thread implements Runnable 我们需要实例化一个Thread实例，然后调用它的start()方法。为新线程添加要做的事情，有以下两种方法：
+ 从Thread派生一个自定义类，然后覆写run()方法  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t.start(); // 启动新线程  } } class MyRunnable implements Runnable { @Override public void run() { System.out.println(&#34;start new thread!&#34;); } } 创建Thread实例时，传入一个Runnable实例：(Runnable是一个抽象类，需要重写run方法)  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://pccmast.github.io/posts/%E7%BA%BF%E7%A8%8B/" />
 <meta property="article:published_time" content="2020-12-05T19:18:24+08:00" />
 <meta property="article:modified_time" content="2020-12-05T19:18:24+08:00" />
 <meta itemprop="name" content="线程">
-<meta itemprop="description" content="">
+<meta itemprop="description" content="线程   一个Java程序实际上是一个JVM进程，JVM进程用一个主线程来执行main()方法，在main()方法内部，我们又可以启动多个线程。此外，JVM还有负责垃圾回收的其他工作线程等。
+  因此，对于大多数Java程序来说，我们说多任务，实际上是说如何使用多线程实现多任务。
+  创建新线程 class Thread implements Runnable 我们需要实例化一个Thread实例，然后调用它的start()方法。为新线程添加要做的事情，有以下两种方法：
+ 从Thread派生一个自定义类，然后覆写run()方法  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t.start(); // 启动新线程  } } class MyRunnable implements Runnable { @Override public void run() { System.out.println(&#34;start new thread!&#34;); } } 创建Thread实例时，传入一个Runnable实例：(Runnable是一个抽象类，需要重写run方法)  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t.">
 <meta itemprop="datePublished" content="2020-12-05T19:18:24+08:00" />
 <meta itemprop="dateModified" content="2020-12-05T19:18:24+08:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="wordCount" content="562">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="线程"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="线程   一个Java程序实际上是一个JVM进程，JVM进程用一个主线程来执行main()方法，在main()方法内部，我们又可以启动多个线程。此外，JVM还有负责垃圾回收的其他工作线程等。
+  因此，对于大多数Java程序来说，我们说多任务，实际上是说如何使用多线程实现多任务。
+  创建新线程 class Thread implements Runnable 我们需要实例化一个Thread实例，然后调用它的start()方法。为新线程添加要做的事情，有以下两种方法：
+ 从Thread派生一个自定义类，然后覆写run()方法  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t.start(); // 启动新线程  } } class MyRunnable implements Runnable { @Override public void run() { System.out.println(&#34;start new thread!&#34;); } } 创建Thread实例时，传入一个Runnable实例：(Runnable是一个抽象类，需要重写run方法)  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t."/>
 
 	
   </head>
@@ -139,7 +148,256 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><ul class="pa0">
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="线程">线程</h1>
+<ol>
+<li>
+<p>一个Java程序实际上是一个JVM进程，JVM进程用一个主线程来执行main()方法，在main()方法内部，我们又可以启动多个线程。此外，JVM还有负责垃圾回收的其他工作线程等。</p>
+</li>
+<li>
+<p>因此，对于大多数Java程序来说，我们说多任务，实际上是说如何使用多线程实现多任务。</p>
+</li>
+</ol>
+<h1 id="创建新线程">创建新线程</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Thread</span> <span style="color:#66d9ef">implements</span> Runnable
+
+</code></pre></div><p>我们需要实例化一个Thread实例，然后调用它的start()方法。为新线程添加要做的事情，有以下两种方法：</p>
+<ol>
+<li>从Thread派生一个自定义类，然后覆写run()方法</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Thread t <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> MyRunnable<span style="color:#f92672">());</span>
+        t<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 启动新线程
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyRunnable</span> <span style="color:#66d9ef">implements</span> Runnable <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;start new thread!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="2">
+<li>创建Thread实例时，传入一个Runnable实例：(Runnable是一个抽象类，需要重写run方法)</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Thread t <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> MyRunnable<span style="color:#f92672">());</span>
+        t<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 启动新线程
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyRunnable</span> <span style="color:#66d9ef">implements</span> Runnable <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;start new thread!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="3">
+<li>还有一种方法是 继承Thread 类，重写 run() 方法，但是当你只需要重写run()方法的时候，不推荐继承方法，因为只有当增强或者修改一个类的时候，才要使用子类。Runnable就是为这种情况设计的</li>
+</ol>
+<p><strong>直接调用Thread实例的run()方法是无效的：</strong></p>
+<ol>
+<li>
+<p>必须调用Thread实例的start()方法才能启动新线程，如果我们查看Thread类的源代码，会看到start()方法内部调用了一个private native void start0()方法，native修饰符表示这个方法是由JVM虚拟机内部的C代码实现的，不是由Java代码实现的, 看不到具体的实现过程。</p>
+</li>
+<li>
+<p>新线程的入口是，构造线程的时候的run()方法</p>
+</li>
+<li>
+<p>一个线程只允许启动一次 / 调用一次 start()</p>
+</li>
+</ol>
+<h1 id="线程的其他方法">线程的其他方法</h1>
+<h4 id="实例方法interrupt">实例方法interrupt()</h4>
+<p>该方法向t线程发出了“中断请求”，至于t线程是否能立刻响应，要看具体代码。<strong>把interrupt状态位置为</strong><code>true</code></p>
+<h4 id="类方法threadinterrupted">类方法Thread.interrupted()</h4>
+<p><strong>返回interrupt状态位并且将该状态位置为</strong><code>false</code>，换句话说，它清除了线程的状态</p>
+<h4 id="实例方法isinterrupted">实例方法isInterrupted()</h4>
+<p>返回interrupt状态位，<strong>它不改变线程的状态</strong>。
+而t线程的的run()方法可以加入while循环，条件设置为isInterrupted()。<code>false</code> 就停止run()</p>
+<h4 id="实例方法join">实例方法join()</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">join</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> InterruptedException
+</code></pre></div><ol>
+<li>
+<p>t.join()方法阻塞调用此方法的线程(calling thread)，直到线程t完成，此线程再继续；通常用于在main()主线程内，等待其它线程完成再结束main()主线程。</p>
+</li>
+<li>
+<p>join方法实现是通过wait（小提示：Object 提供的方法）。 当main线程调用t.join时候，main线程会获得线程对象t的锁（wait 意味着拿到该对象的锁),调用该对象的wait(等待时间)，直到该对象唤醒main线程 ，比如退出后.</p>
+</li>
+<li>
+<p>t.join()在t线程中断(interrupt)后也会返回，此时抛出<code>InterruptException</code>，所以通过catch这个错误来检测别的进程有没有interrupt它</p>
+</li>
+<li>
+<p>t.join(time) 大概等time毫秒，还没结束就强行结束进程。是因为时间由OS控制，不确定到底等了多少秒</p>
+</li>
+<li>
+<p>某线程被interrupted时, 它恰好在wait,sleep,occupied, 它就会抛出异常, isInterrupted() 也就不会被正常置为false</p>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">interrupted</span><span style="color:#f92672">())</span>  <span style="color:#75715e">// Clears interrupted status!
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InterruptedException<span style="color:#f92672">();</span>
+</code></pre></div><p>P.S. if any thread has interrupted the current thread. The interrupted status of the current thread is <strong>cleared</strong> when this exception is thrown.</p>
+<p>例子：</p>
+<blockquote>
+<p>来自廖雪峰的java教程：中断线程</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+        Thread t <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyThread<span style="color:#f92672">();</span>
+        t<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>1000<span style="color:#f92672">);</span>
+        t<span style="color:#f92672">.</span><span style="color:#a6e22e">interrupt</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 中断t线程
+</span><span style="color:#75715e"></span>        t<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 等待t线程结束
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;end&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyThread</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        Thread hello <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HelloThread<span style="color:#f92672">();</span>
+        hello<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 启动hello线程
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            hello<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span> <span style="color:#75715e">// 等待hello线程结束
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;interrupted!&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        hello<span style="color:#f92672">.</span><span style="color:#a6e22e">interrupt</span><span style="color:#f92672">();</span> <span style="color:#75715e">// join()方法抛出InterruptedException以后，中断状态被清楚，如果不再调用`hello.interrupt()`方法，那么hello()会一直执行，jvm不会推出
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HelloThread</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(!</span>isInterrupted<span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            n<span style="color:#f92672">++;</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>n <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; hello!&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>100<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><h4 id="类方法-sleep">类方法 sleep()</h4>
+<h1 id="object-的线程方法">Object 的线程方法</h1>
+<h4 id="wait">wait()</h4>
+<p>使<strong>当前线程</strong>等待，直到另一个线程为此对象调用notify()方法或notifyAll()方法，或者经过了指定的时间。</p>
+<h4 id="notify与notifyall">notify()与notifyAll()</h4>
+<p>notify():Wakes up a single thread that is waiting on this object&rsquo;s monitor. If any threads are waiting on this object, one of them is chosen to be awakened.</p>
+<p>notifyAll():Wakes up all threads that are waiting on this object&rsquo;s monitor. A thread waits on an object&rsquo;s monitor by calling one of the wait methods</p>
+<h1 id="多线程带来的数据错误问题">多线程带来的数据错误问题</h1>
+<h5 id="操作的非原子性带来">操作的非原子性带来</h5>
+<p>比如 <code>++i</code> 的操作分为 取数、加一、放回去 三步。</p>
+<p>保证一段代码的原子性就是通过加锁和解锁实现的，这种加锁和解锁之间的代码块我们称之为临界区（Critical Section），<strong>任何时候临界区最多只有一个线程能执行</strong></p>
+<h3 id="不需要synchronized的原子操作">不需要synchronized的原子操作</h3>
+<p>JVM规范定义了几种原子操作：</p>
+<ul>
+<li>基本类型（long和double除外，包括这些类型的数组）赋值，例如：int n = m；</li>
+<li>引用类型赋值，例如：List<!-- raw HTML omitted --> list = anotherList。</li>
+</ul>
+<p>long和double是64位数据，JVM没有明确规定64位赋值操作是不是一个原子操作，不过在x64平台的JVM是把long和double的赋值作为原子操作实现的。</p>
+<h3 id="hashmap-的死循环问题">hashmap 的死循环问题</h3>
+<h1 id="死锁">死锁</h1>
+<p>Java的线程锁是可重入的锁。JVM允许同一个线程重复获取同一个锁，这种能被同一个线程反复获取的锁，就叫做可重入锁。</p>
+<p>获取锁的时候，不但要判断是否是第一次获取，还要记录这是第几次获取。每获取一次锁，记录+1，每退出synchronized块，记录-1，减到0的时候，才会真正释放锁。</p>
+<p>一个线程可以获取一个锁后，再继续获取另一个锁。</p>
+<p>两个线程各自持有不同的锁，然后各自试图获取对方手里的锁，造成了双方无限等待下去，这就是死锁</p>
+<h3 id="死锁的排查">死锁的排查</h3>
+<ol>
+<li>使用<code> jps</code> 命令查找死锁的命令PID</li>
+<li><code>jstack pid</code> 查看对应java进程的所有线程栈</li>
+</ol>
+<p><strong>该方法也可以查看影响当前程序性能的线程</strong></p>
+<h3 id="预防死锁产生的原则">预防死锁产生的原则</h3>
+<p><strong>所有线程都按相同的顺序获得资源的锁</strong></p>
+<h3 id="实现线程安全的基本手段">实现线程安全的基本手段</h3>
+<ul>
+<li>不可变类：String，Interger，他们所有的成员变量都是final，多线程同时访问时只能读不能写，这些不变类也是线程安全的</li>
+<li>类似<code> Math</code> 这些只提供静态方法，没有成员变量的类，也是线程安全的</li>
+<li>使用 synchronized 同步方法</li>
+</ul>
+<h4 id="synchronized-方法同步方法">synchronized 方法（同步方法）</h4>
+<p>用synchronized修饰方法可以把整个方法变为同步代码块</p>
+<p>synchrozied + 对象：把一个对象(this)当成锁
+synchrozied + 静态方法：把一个class对象（类名.class）当成锁</p>
+<p><strong>在使用synchronized的时候，不必担心抛出异常。因为无论是否有异常，都会在synchronized结束处正确释放锁</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>lock<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">...</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="并发工具包juc-包javautilconcurrent">并发工具包JUC 包：java.util.concurrent</h4>
+<p>里面有数据结构：</p>
+<ul>
+<li>concurrentHashMap</li>
+<li>AtomicInteger: 把<code>a+=1</code>这样的操作变成了原子的</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    AtomicInteger a<span style="color:#f92672">;</span>
+    a<span style="color:#f92672">.</span><span style="color:#a6e22e">addAndGet</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+</code></pre></div><h4 id="reentrantlock-可重入锁">ReentrantLock: 可重入锁</h4>
+<p>使用模板见文档:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">X</span> <span style="color:#f92672">{</span>
+   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> ReentrantLock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">();</span>
+   <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">m</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+     lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>  <span style="color:#75715e">// block until condition holds
+</span><span style="color:#75715e"></span>     <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+       <span style="color:#75715e">// ... method body
+</span><span style="color:#75715e"></span>     <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+       lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">()</span>
+     <span style="color:#f92672">}</span>
+   <span style="color:#f92672">}</span>
+ <span style="color:#f92672">}</span>
+</code></pre></div><p>java.util.concurrent.locks中实现的功能，有三个特点：</p>
+<ol>
+<li>
+<p><strong>可重入</strong>（<code>synchronized</code> 也可以重入）</p>
+</li>
+<li>
+<p><strong>可中断</strong>
+与synchronized不同的是，ReentrantLock对中断是有响应的.synchronized一旦尝试获取锁就会一直等待直到获取到锁。ReentrantLock会给予一个中断作为回应</p>
+</li>
+<li>
+<p><strong>公平锁</strong>
+构造函数可以放入一个boolean参数，true时调用内部类构造函数FairSync()创建一个公平锁，否则NonfairSync()创建非公平锁。默认是非公平锁。</p>
+</li>
+</ol>
+<p>公平和非公平锁的队列都基于锁内部维护的一个双向链表，表结点Node的值就是每一个请求当前锁的线程。公平锁则在于每次都是依次从队首取值，非公平锁与公平锁的区别在于<strong>新晋获取锁的进程会有多次机会去抢占锁。如果被加入了等待队列后则跟公平锁没有区别。</strong></p>
+<ol start="4">
+<li><strong>可限时</strong>
+超时不能获得锁，就返回false，不会永久等待构成死锁</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">lock<span style="color:#f92672">.</span><span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> timeout<span style="color:#f92672">,</span> TimeUnit unit<span style="color:#f92672">)</span>
+</code></pre></div><h4 id="reentrantlock-可以与-condition-对象配合实现await和notify功能"><strong>ReentrantLock 可以与 Condition 对象配合，实现await和notify功能</strong></h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Lock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">();</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Condition condition <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
+</code></pre></div><p>代码样例可见于<code>Condition</code> 文档</p>
+<h1 id="线程的状态">线程的状态</h1>
+<p><a href="https://docs.oracle.com/en/java/javase/15/docs/api/java.base/java/lang/Thread.State.html">来自JDK15文档：线程的状态</a></p>
+<h3 id="waiting">waiting</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">State</span> WAITING
+</code></pre></div><p>Thread state for a waiting thread. A thread is in the waiting state due to calling one of the following methods:</p>
+<ul>
+<li><strong>Object.wait</strong> with no timeout</li>
+<li><strong>Thread.join</strong> with no timeout</li>
+<li><strong>LockSupport.park</strong></li>
+</ul>
+<p>A thread in the waiting state is waiting for another thread to perform a particular action.
+For example：</p>
+<ul>
+<li>a thread that has called Object.wait() on an object is waiting for another thread to call Object.notify() or Object.notifyAll() on that object.</li>
+<li>A thread that has called Thread.join() is waiting for a specified thread to terminate.</li>
+</ul>
+<h3 id="blocked">blocked</h3>
+<p><a href="https://my.oschina.net/goldenshaw/blog/706663">参考：Java 线程状态之 BLOCKED</a></p>
+<p>一个处于 blocked 状态的线程指的是：</p>
+<ul>
+<li>该线程正在等待一个监视器锁以进入一个同步的块或方法。</li>
+<li>该线程在其调用 Object.wait 方法之后，正在等待一个监视器锁，以再次进入一个同步的块或方法。</li>
+</ul>
+<ul class="pa0">
   
 </ul>
 <div class="mt6 instapaper_ignoref">

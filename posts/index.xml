@@ -13,7 +13,10 @@
       <pubDate>Sat, 05 Dec 2020 19:18:24 +0800</pubDate>
       
       <guid>http://pccmast.github.io/posts/%E7%BA%BF%E7%A8%8B/</guid>
-      <description></description>
+      <description>线程   一个Java程序实际上是一个JVM进程，JVM进程用一个主线程来执行main()方法，在main()方法内部，我们又可以启动多个线程。此外，JVM还有负责垃圾回收的其他工作线程等。
+  因此，对于大多数Java程序来说，我们说多任务，实际上是说如何使用多线程实现多任务。
+  创建新线程 class Thread implements Runnable 我们需要实例化一个Thread实例，然后调用它的start()方法。为新线程添加要做的事情，有以下两种方法：
+ 从Thread派生一个自定义类，然后覆写run()方法  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t.start(); // 启动新线程  } } class MyRunnable implements Runnable { @Override public void run() { System.out.println(&amp;#34;start new thread!&amp;#34;); } } 创建Thread实例时，传入一个Runnable实例：(Runnable是一个抽象类，需要重写run方法)  public class Main { public static void main(String[] args) { Thread t = new Thread(new MyRunnable()); t.</description>
     </item>
     
     <item>
