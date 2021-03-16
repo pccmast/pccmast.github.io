@@ -6,7 +6,26 @@
     <description>Recent content in Posts on 我的第一个博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Sat, 05 Dec 2020 19:18:24 +0800</lastBuildDate><atom:link href="http://pccmast.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Mar 2021 20:09:57 +0800</lastBuildDate><atom:link href="http://pccmast.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Html Element</title>
+      <link>http://pccmast.github.io/posts/html-element/</link>
+      <pubDate>Tue, 16 Mar 2021 20:09:57 +0800</pubDate>
+      
+      <guid>http://pccmast.github.io/posts/html-element/</guid>
+      <description>a 标签 当点击一个链接或按钮时，打开一个新的电子邮件发送信息而不是连接到一个资源或页面，这种情况是可能做到的。这样做是使用元素和mailto：URL的方案。 其最基本和最常用的使用形式为一个mailto:link （链接），链接简单说明收件人的电子邮件地址。例如:
+&amp;lt;a href=&amp;quot;mailto:nowhere@mozilla.org&amp;quot;&amp;gt;向 nowhere 发邮件&amp;lt;/a&amp;gt;
+真实案例： 每个字段的值必须是URL编码的。 也就是说，不能有非打印字符（不可见字符比如制表符、换行符、分页符）和空格 percent-escaped. 同时注意使用问号（?）来分隔主URL与参数值，以及使用&amp;amp;符来分隔mailto:中的各个参数。
+&amp;lt;a href=&amp;#34;mailto:nowhere@mozilla.org?cc=name2@rapidtables.com&amp;amp;bcc=name3@rapidtables.com&amp;amp;subject=The%20subject%20of%20the%20email&amp;amp;body=The%20body%20of%20the%20email&amp;#34;&amp;gt; Send mail with cc, bcc, subject and body &amp;lt;/a&amp;gt; a标签的超链接还可以设置链接到QQ、迅雷、：
+tencent://temp-chat?QQ=XXX? thunder://... href值还可以为空：当使用a标签来做按钮，不需要跳转时，href值即为空。
+a标签的download属性 (HTML5) 此属性指示浏览器下载 URL 而不是导航到它，因此将提示用户将其保存为本地文件。如果属性有一个值（可以没有值），那么此值将在下载保存过程中作为预填充的文件名（如果用户需要，仍然可以更改文件名）。
+如果同时有target=&amp;quot;_blank&amp;quot;与download=&amp;ldquo;result.jpg&amp;rdquo; 只会跳转到新的网页（只有target生效）
+img 标签 img的src为空：当前地址
+img的属性&amp;lt;usemap=&amp;quot;#&amp;quot;&amp;gt;用来做选座页面
+usemap 属性将图像定义为客户端图像映射(图像映射image-map指带有可点击区域的图像)。 usemap 属性与 &amp;lt;map&amp;gt; 元素的 name 或 id 属性相关联，以建立&amp;lt;img&amp;gt; 与&amp;lt;map&amp;gt; 之间的关系。那么指定的区域用map包裹的area标签来指定
+table 标签 table属性  border：线宽，指定宽度 caption：标题 thead：table head的行，里面的单元格可以变成 th tbody：表体，里面用  tr：table row td：单元格 table data   tfoot：表尾 ，定义了一组表格中各列的汇总行。里面用td（推荐）、th都行。  th、td的跨列、跨行：标签增加属性。 colspan=2，跨2列 rowspan=2 跨2行</description>
+    </item>
+    
     <item>
       <title>线程</title>
       <link>http://pccmast.github.io/posts/%E7%BA%BF%E7%A8%8B/</link>
