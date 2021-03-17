@@ -6,7 +6,38 @@
     <description>Recent content in Posts on 我的第一个博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Tue, 16 Mar 2021 20:09:57 +0800</lastBuildDate><atom:link href="http://pccmast.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Mar 2021 19:43:05 +0800</lastBuildDate><atom:link href="http://pccmast.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Url</title>
+      <link>http://pccmast.github.io/posts/url/</link>
+      <pubDate>Wed, 17 Mar 2021 19:43:05 +0800</pubDate>
+      
+      <guid>http://pccmast.github.io/posts/url/</guid>
+      <description>URL：Uniform Resource Locator 出现的都是ASCII字符，中文会被转码。
+统一资源定位符, 包括协议、域名、路径、查询参数、锚点。
+协议：代表访问的协议，一般为http或者https或者ftp等等
+查询参数：与路径之间用问号分割。
+host：主机名、域名
+port：端口号：默认使用80端口（http协议）
+锚点：浏览器用来做页面定位的
+DNS： Domain Name System DNS是一个按层次结构排列的分布式系统，由许多DNS服务器组成。DNS服务器是注册加入DNS的任何计算机。它具有域名和IP地址的索引，并且在请求时，它可以告诉您与域名关联的当前IP地址。
+输入nslookup命令，结果中的默认服务器就是 dns 服务器的域名和地址
+nslookup 命令 nslookup 参数 domain [dns-server] dns-server：指定dns服务器，如果没有指定用自带的。
+domain：要查询的域名或者ip地址
+参数：-type -timeout 等等
+IP协议 IP实现两个基本功能：寻址和分段。
+IP可以根据数据报报头中包括的目的地址将数据报传送到目的地址，在此过程中IP负责选择传送的道路，这种选择道路称为路由功能。如果有些网络内只能传送小数据报，IP可以将数据报重新组装并在报头域内注明。IP模块中包括这些基本功能，这些模块存在于网络中的每台主机和网关上，而且这些模块（特别在网关上）有路由选择和其它服务功能。
+ping命令 Ping 127.0.0.1 Ping回送地址是为了检查本地的TCP/IP协议有没有设置好
+Ping本机IP地址 Ping本机IP地址， 这样是为了检查本机的IP地址是否设置有误
+Ping网关地址 Ping本网网关或本网IP地址，这样的是为了检查硬件设备是否有问题，也可以检查本机与本地网络连接是否正常
+Ping远程地址 （在非局域网中这一步骤可以忽略）Ping远程IP地址，这主要是检查本网或本机与外部的连接是否正常
+##　域名
+顶级域名
+顶级域名(TLD, Top-Level Domain)可以告诉用户域名所提供的服务类型。最通用的顶级域名（.com, .org, .net）不需要web服务器满足严格的标准，但一些顶级域名则执行更严格的政策。比如：
+ 地区的顶级域名，如.us，.fr，或.sh，可以要求必须提供给定语言的服务器或者托管在指定国家。这些TLD通常表明对应的网页服务从属于何种语言或哪个地区。 包含.gov的顶级域名只能被政府部门使用。 .edu只能为教育或研究机构使用。  Secondary Level Domain, 二级域名
+刚好位于TLD前面的标签也被称为二级域名 (SLD)。一个域名可以有多个标签（或者说是组件），没有强制规定必须要3个标签来构成域名。例如，www.inf.ed.ac.uk 是一个正确的域名。当拥有了“上级”部分(例如 mozilla.org)，你还可以创建另外的域名 (有时被称为 &amp;ldquo;子域名&amp;rdquo;) (例如 developer.mozilla.org).</description>
+    </item>
+    
     <item>
       <title>Html Element</title>
       <link>http://pccmast.github.io/posts/html-element/</link>

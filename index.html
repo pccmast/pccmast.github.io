@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://pccmast.github.io/" />
-<meta property="og:updated_time" content="2021-03-16T20:09:57+08:00" />
+<meta property="og:updated_time" content="2021-03-17T19:43:05+08:00" />
 <meta itemprop="name" content="我的第一个博客">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
@@ -128,6 +128,52 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://pccmast.github.io/posts/url/" class="color-inherit dim link">
+            Url
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          URL：Uniform Resource Locator 出现的都是ASCII字符，中文会被转码。
+统一资源定位符, 包括协议、域名、路径、查询参数、锚点。
+协议：代表访问的协议，一般为http或者https或者ftp等等
+查询参数：与路径之间用问号分割。
+host：主机名、域名
+port：端口号：默认使用80端口（http协议）
+锚点：浏览器用来做页面定位的
+DNS： Domain Name System DNS是一个按层次结构排列的分布式系统，由许多DNS服务器组成。DNS服务器是注册加入DNS的任何计算机。它具有域名和IP地址的索引，并且在请求时，它可以告诉您与域名关联的当前IP地址。
+输入nslookup命令，结果中的默认服务器就是 dns 服务器的域名和地址
+nslookup 命令 nslookup 参数 domain [dns-server] dns-server：指定dns服务器，如果没有指定用自带的。
+domain：要查询的域名或者ip地址
+参数：-type -timeout 等等
+IP协议 IP实现两个基本功能：寻址和分段。
+IP可以根据数据报报头中包括的目的地址将数据报传送到目的地址，在此过程中IP负责选择传送的道路，这种选择道路称为路由功能。如果有些网络内只能传送小数据报，IP可以将数据报重新组装并在报头域内注明。IP模块中包括这些基本功能，这些模块存在于网络中的每台主机和网关上，而且这些模块（特别在网关上）有路由选择和其它服务功能。
+ping命令 Ping 127.0.0.1 Ping回送地址是为了检查本地的TCP/IP协议有没有设置好
+Ping本机IP地址 Ping本机IP地址， 这样是为了检查本机的IP地址是否设置有误
+Ping网关地址 Ping本网网关或本网IP地址，这样的是为了检查硬件设备是否有问题，也可以检查本机与本地网络连接是否正常
+Ping远程地址 （在非局域网中这一步骤可以忽略）Ping远程IP地址，这主要是检查本网或本机与外部的连接是否正常
+##　域名
+顶级域名
+顶级域名(TLD, Top-Level Domain)可以告诉用户域名所提供的服务类型。最通用的顶级域名（.com, .org, .net）不需要web服务器满足严格的标准，但一些顶级域名则执行更严格的政策。比如：
+ 地区的顶级域名，如.us，.fr，或.sh，可以要求必须提供给定语言的服务器或者托管在指定国家。这些TLD通常表明对应的网页服务从属于何种语言或哪个地区。 包含.gov的顶级域名只能被政府部门使用。 .edu只能为教育或研究机构使用。  Secondary Level Domain, 二级域名
+刚好位于TLD前面的标签也被称为二级域名 (SLD)。一个域名可以有多个标签（或者说是组件），没有强制规定必须要3个标签来构成域名。例如，www.inf.ed.ac.uk 是一个正确的域名。当拥有了“上级”部分(例如 mozilla.org)，你还可以创建另外的域名 (有时被称为 &ldquo;子域名&rdquo;) (例如 developer.mozilla.org).
+        </div>
+          <a href="http://pccmast.github.io/posts/url/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://pccmast.github.io/posts/html-element/" class="color-inherit dim link">
             Html Element
             </a>
@@ -181,36 +227,18 @@ table 标签 table属性  border：线宽，指定宽度 caption：标题 thead�
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="color-inherit dim link">
-            Hashmapimplements
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          jdk11的HashMap源码分析 文档注释部分：  HashMap是无序的，特别是不保证顺序随时间不变 get 和 put 操作是常量时间复杂度的&mdash;O(1) 装载因子设置为0.75，平衡了空间和时间消耗。更高的装载因子降低了空间成本却增大了查找的花费，导致put、get操作时间变慢。 如果初始容量（initial capacity）比最大元素数（maximum number of entries）除以装载因子的值还大，那么不会再进行rehash操作。 一般采用桶（binned、bucketed）哈希表，但是如果桶元素太多，会变成树（TreeNodes），树的结构就像TreeMap 由于 resize 和 removal 操作导致树的结点太少的时候，会将红黑树变为哈希桶（untreeified）  继承关系 public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable  HashMap可被序列化，可被克隆  参数 static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16 // 必须是2的幂 static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30; // 必须是2的幂 static final float DEFAULT_LOAD_FACTOR = 0.75f; static final int TREEIFY_THRESHOLD = 8; // 当一个hash桶的元素数大于8，那么就变成红黑树实现  static final int UNTREEIFY_THRESHOLD = 6; // 当resize让一个树的元素小于6时，就把它变为桶  static final int MIN_TREEIFY_CAPACITY = 64; // 整个hash表执行树化操作的最小容量，表里的元素数大于64才会树化桶 put()  代码注解来源
-        </div>
-          <a href="http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://pccmast.github.io/posts/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="link black dim">
+              Hashmapimplements
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://pccmast.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="link black dim">
